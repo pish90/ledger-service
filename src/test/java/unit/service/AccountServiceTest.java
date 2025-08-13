@@ -46,8 +46,8 @@ public class AccountServiceTest {
         BigDecimal initialBalance = new BigDecimal("500");
 
         Account savedAccount = new Account();
-        savedAccount.setId(accountId);  // ✅ Set the ID
-        savedAccount.setBalance(initialBalance);  // ✅ Set the balance
+        savedAccount.setId(accountId);
+        savedAccount.setBalance(initialBalance);
         savedAccount.setVersion(1L);
 
         when(accountRepository.existsById(accountId)).thenReturn(false);
@@ -58,7 +58,7 @@ public class AccountServiceTest {
 
         // Then
         assertNotNull(result);
-        assertEquals(accountId, result.getId());  // This should now work
+        assertEquals(accountId, result.getId());
         assertEquals(initialBalance, result.getBalance());
 
         verify(accountRepository).existsById(accountId);
@@ -106,8 +106,8 @@ public class AccountServiceTest {
         // Given
         Long accountId = 123456789L;
         Account existingAccount = new Account();
-        existingAccount.setId(accountId);  // ✅ Set the ID
-        existingAccount.setBalance(new BigDecimal("1000"));  // ✅ Set the balance
+        existingAccount.setId(accountId);
+        existingAccount.setBalance(new BigDecimal("1000"));
 
         when(accountRepository.findById(accountId)).thenReturn(Optional.of(existingAccount));
 
@@ -166,8 +166,8 @@ public class AccountServiceTest {
         accountService.transferFunds(fromAccountId, toAccountId, transferAmount);
 
         // Then - Check balances were updated by debit/credit methods
-        assertEquals(new BigDecimal("800"), fromAccount.getBalance());  // 1000 - 200
-        assertEquals(new BigDecimal("700"), toAccount.getBalance());    // 500 + 200
+        assertEquals(new BigDecimal("800"), fromAccount.getBalance());
+        assertEquals(new BigDecimal("700"), toAccount.getBalance());
 
         verify(accountRepository).findByIdWithLock(fromAccountId);
         verify(accountRepository).findByIdWithLock(toAccountId);
@@ -190,7 +190,7 @@ public class AccountServiceTest {
         toAccount.setId(toAccountId);
         toAccount.setBalance(new BigDecimal("500"));
 
-        // ✅ Mock both accounts to exist so we reach the balance check
+        // Mock both accounts to exist
         when(accountRepository.findByIdWithLock(fromAccountId)).thenReturn(Optional.of(fromAccount));
         when(accountRepository.findByIdWithLock(toAccountId)).thenReturn(Optional.of(toAccount));
 
@@ -198,7 +198,7 @@ public class AccountServiceTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                 () -> accountService.transferFunds(fromAccountId, toAccountId, transferAmount));
 
-        // ✅ Check for exact message from your service
+        // Check for exact message from the service
         assertEquals("Insufficient funds", exception.getMessage());
 
         verify(accountRepository).findByIdWithLock(fromAccountId);

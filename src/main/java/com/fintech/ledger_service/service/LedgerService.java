@@ -147,7 +147,7 @@ public class LedgerService {
 
             // Find the specific accounts
             Account fromAccount = lockedAccounts.stream()
-                    .filter(acc -> acc.getId().equals(fromAccountId))  // Fixed comparison
+                    .filter(acc -> acc.getId().equals(fromAccountId))
                     .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException("From account not found: " + fromAccountId));
 
