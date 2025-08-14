@@ -23,13 +23,13 @@ public class Account {
     private Long id;
 
     @NotNull
-    @DecimalMin(value = "0.0", inclusive = true)
+    @DecimalMin(value = "0.0")
     @Column(precision = 19, scale = 2)
     private BigDecimal balance;
 
     @Version
     @Column(nullable = false)
-    private Long version;
+    private Long version = 1L;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -48,8 +48,9 @@ public class Account {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public Account(Long id, BigDecimal bigDecimal) {
-
+    public Account(Long id, BigDecimal balance) {
+        this.id = id;
+        this.balance = balance;
     }
 
     public void debit(BigDecimal amount) {

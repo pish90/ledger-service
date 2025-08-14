@@ -17,10 +17,10 @@ public class TransferRequest {
     @NotBlank(message = "Transfer ID is required")
     private String transferId;
 
-    @NotBlank(message = "From account ID is required")
+    @NotNull(message = "From account ID is required")
     private Long fromAccountId;
 
-    @NotBlank(message = "To account ID is required")
+    @NotNull(message = "To account ID is required")
     private Long toAccountId;
 
     @NotNull(message = "Amount is required")

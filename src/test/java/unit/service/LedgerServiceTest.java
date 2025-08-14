@@ -49,19 +49,18 @@ class LedgerServiceTest {
         expectedAccount.setBalance(initialBalance);
         expectedAccount.setVersion(1L);
 
-        when(accountRepository.existsById(accountId)).thenReturn(false);
+//        when(accountRepository.existsById(expectedAccount.getId())).thenReturn(false);
         when(accountRepository.save(any(Account.class))).thenReturn(expectedAccount);
 
         // When
-        Account account = ledgerService.createAccount(accountId, initialBalance);
+        Account account = ledgerService.createAccount(initialBalance);
 
         // Then
         assertNotNull(account);
-        assertEquals(accountId, account.getId());
         assertEquals(initialBalance, account.getBalance());
         assertNotNull(account.getVersion());
 
-        verify(accountRepository).existsById(accountId);
+//        verify(accountRepository).existsById(account.getId());
         verify(accountRepository).save(any(Account.class));
     }
 

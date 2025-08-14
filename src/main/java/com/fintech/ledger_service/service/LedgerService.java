@@ -74,8 +74,8 @@ public class LedgerService {
         }
 
         // Create account
-        Account account = new Account(accountId);
-        Account savedAccount = accountRepository.save(account);
+        Account account = new Account(initialBalance);
+        Account savedAccount = accountRepository.saveAndFlush(account);
 
         // Create initial balance entry if needed
         if (initialBalance.compareTo(BigDecimal.ZERO) > 0) {

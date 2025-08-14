@@ -31,7 +31,7 @@ public class AccountController {
     @ApiResponse(responseCode = "400", description = "Invalid request or account already exists")
     public ResponseEntity<AccountResponse> createAccount(@Valid @RequestBody CreateAccountRequest request) {
         try {
-            Account account = ledgerService.createAccount(request.getAccountId(), request.getInitialBalance());
+            Account account = ledgerService.createAccount(request.getInitialBalance());
             AccountResponse response = AccountResponse.fromAccount(account);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (IllegalArgumentException e) {

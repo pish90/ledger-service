@@ -41,7 +41,7 @@ public class AccountService {
         }
 
         // Create and save account
-        Account account = new Account(accountId, initialBalance);
+        Account account = new Account(initialBalance);
         Account savedAccount = accountRepository.save(account);
 
         log.info("Account created successfully: {} [correlationId={}]", accountId, correlationId);
